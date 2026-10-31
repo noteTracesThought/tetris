@@ -1,0 +1,134 @@
+import random
+import domain.models.entities.block_catalog    as blkdc
+from domain.models.valueobject.position import MovePosition
+
+# ▼▼▼ 処理速度計測（10万回） ▼▼▼
+random.seed(1234567)
+# ▲▲▲ 処理速度計測（10万回） ▲▲▲
+class Blocks():
+    def __init__(self, blocks_map, play_board):
+    # def __init__(self, pos, blocks_map, play_board):
+        # self.pos        = pos
+        self.blocks_map = blocks_map
+        self.play_board = play_board
+
+    def create_blocks(self):
+        '''Create tetromino block definitions.
+
+        Initialize block map and key list.
+
+        Returns:
+            None
+        '''
+        # ▼▼▼ 処理速度計測（10万回） ▼▼▼
+        # print("[init] create_blocks")
+        # ▲▲▲ 処理速度計測（10万回） ▲▲▲
+        # global blocks_map_key
+        # global blocks_map
+        self.blocks_map.block_map_key = list()
+        self.blocks_map.block_map = {
+                        "I": blkdc.I,
+                        "J": blkdc.J,
+                        "L": blkdc.L,
+                        "S": blkdc.S,
+                        "Z": blkdc.Z,
+                        "O": blkdc.O,
+                        "T": blkdc.T,
+                    }
+        for key in self.blocks_map.block_map.keys():
+            self.blocks_map.block_map_key.append(key)
+
+    def get_block(self):
+        '''Get a random tetromino block.
+
+        Returns:
+            tuple:
+                Randomly selected block.
+        '''
+        return (self.blocks_map.block_map[random.choice(self.blocks_map.block_map_key)])
+
+    def get_block_width(self, block, rotation):
+        '''Get effective block width.
+
+        Calculate the actual width of a block
+        excluding trailing empty cells.
+
+        Args:
+            block (tuple):
+                Tetromino shape data.
+
+        Returns:
+            int:
+                Effective width of the block.
+        '''
+        # ▼▼▼ 処理速度計測（10万回） ▼▼▼
+        # print("[check] get_block_width")
+        # ▲▲▲ 処理速度計測（10万回） ▲▲▲
+        width = 0
+        for row in block[rotation]:
+            for col in range(len(row)):
+                if row[col] == 1:
+                    width = max(width, col+1)
+        return width
+
+    def get_block_height(self, block, rotation):
+        '''Get effective block height.
+
+        Calculate the actual height of a block
+        excluding trailing empty cells.
+
+        Args:
+            block (tuple):
+                Tetromino shape data.
+
+        Returns:
+            int:
+                Effective height of the block.
+        '''
+        # ▼▼▼ 処理速度計測（10万回） ▼▼▼
+        # print("[check] get_block_height")
+        # ▲▲▲ 処理速度計測（10万回） ▲▲▲
+        height = 0
+        for row in range(len(block[rotation])):
+            if 1 in block[rotation][row]:
+                height = row + 1
+        return height
+
+    def check_operation_rotate(self):
+        '''Check block rotation validity.
+
+        Validate whether rotation is
+        allowed in the current position.
+
+        Returns:
+            None
+        '''
+        # ▼▼▼ 処理速度計測（10万回） ▼▼▼
+        # print("[check] check_operation_rotate")
+        # ▲▲▲ 処理速度計測（10万回） ▲▲▲
+        # TODO:
+        # Rotation validity check may move to Collision.
+        # Current implementation keeps compatibility with rev0.3.
+        return False
+
+    def fix_block(self, block, pos:MovePosition, rotation):
+    # def fix_block(self, block):
+        '''Fix the block on the board.
+
+            Store the current block into
+            board_result as a fixed block.
+
+            Args:
+                block (tuple):
+                    Current tetromino shape.
+
+            Returns:
+                None
+        '''
+        # global board_result
+        for r in range(len(block[rotation])):
+            for c in range(len(block[rotation][r])):
+                if block[rotation][r][c] == 1:
+                    self.play_board.board_result[pos.next.y.value + r][pos.next.x.value + c] = 1
+                    # self.play_board.board_result[pos.next.y + r][pos.next.x + c] = 1
+                    # print("check", y+r, x+c)

@@ -1,0 +1,118 @@
+import domain.constants.playboard    as brddc
+from block.block import Blocks
+from domain.models.entities.tetromino import Tetromino
+
+class Collision():
+    '''update check header
+    update check functions
+
+    Todo:
+        * rotate
+    '''
+    def __init__(self, tetromino:Tetromino, blocks_map, play_board, Blocks:Blocks):
+        self.tetromino  = tetromino
+        self.blocks_map = blocks_map
+        self.play_board = play_board
+        self.blocks     = Blocks
+
+    def is_invalid_position(self, block):
+        '''Validate block movement and rotation.
+
+        Correct coordinates to prevent
+        movement outside the board.
+
+        Args:
+            block (tuple):
+                Current tetromino shape.
+
+        Returns:
+            tuple:
+                Corrected x-coordinate
+                and y-coordinate.
+        '''
+        print("[check] is_invalid_position")
+        is_invalid = False
+        is_invalid_move = self.is_out_of_board(block)
+        is_invalid_rotate = self.blocks.check_operation_rotate()
+        if is_invalid_move or is_invalid_rotate:
+            is_invalid = True
+        return is_invalid
+
+    def is_out_of_board(self, block):
+        '''Check movable range of the block.
+
+        Prevent block movement outside
+        the board boundary.
+
+        Args:
+            block (tuple):
+                Current tetromino shape.
+
+        Returns:
+            (bool)
+                True  : Under or Over
+                False : Within the specified range
+        '''
+        print("[check] is_out_of_board")
+        is_invalid = False
+        block_width = self.tetromino.width()
+        block_height = self.tetromino.height()
+        
+        # block_width = self.blocks.get_block_width(block, self.blocks_map.rotation)
+        # block_height = self.blocks.get_block_height(block, self.blocks_map.rotation)
+        pos = self.tetromino.get_position()
+        if pos.next.x.value < 0:
+            is_invalid = True
+        if pos.next.y.value < 0:
+            is_invalid = True
+        if pos.next.x.value > brddc.PlayBoardSize.WIDTH - block_width:
+            is_invalid = True
+        if pos.next.y.value > brddc.PlayBoardSize.HEIGHT - block_height:
+            is_invalid = True
+        return is_invalid
+
+    def check_collision_detection(self, block):
+        '''Check if there was a collision with a block.
+
+        Detecting Block Collisions.
+
+        Args:
+            block (tuple):
+                Current tetromino shape.
+
+        Returns:
+            tuple:
+                Corrected x-coordinate
+                and y-coordinate.
+        '''
+        print("[check] check_collision_detection")
+        block_width = self.tetromino.width()
+        block_height = self.tetromino.height()
+        # block_width = self.blocks.get_block_width(block, self.blocks_map.rotation)
+        # block_height = self.blocks.get_block_height(block, self.blocks_map.rotation)
+        pos = self.tetromino.get_position()
+        rotation = self.tetromino.get_rotation()
+        for r in range(len(block[rotation])):
+            for c in range(len(block[rotation][r])):
+                # 衝突検知(床)
+                if pos.next.y.value >= brddc.PlayBoardSize.HEIGHT - block_height:
+                    # print(f"next_y:{next_y}")
+                    return True
+                
+                # next(blockなし)
+                if block[rotation][r][c] != 1:
+                    continue
+                
+                # 衝突検知(board block)
+                if self.play_board.board_result[pos.next.y.value + r][pos.next.x.value + c] == 1:
+                    # print(f"next_y+r:{next_y+r}")
+                    # print(f"next_x+c:{next_x+c}")
+                    return True
+                
+                # 衝突検知(next board block)
+                if self.play_board.board_result[pos.next.y.value + r + 1][pos.next.x.value + c] == 1:
+                    # print(f"next_y+r+1:{next_y+r+1}")
+                    # print(f"next_x+c:{next_x+c}")
+                    return True
+                
+        return False
