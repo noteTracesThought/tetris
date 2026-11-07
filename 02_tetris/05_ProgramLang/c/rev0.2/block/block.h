@@ -10,13 +10,13 @@ typedef int BlockShape[4][4][4];
 typedef struct {
     char key;
     const int (*shape)[4][4];   /* BlockShape へのポインタ */
-} BlockMapEntry;
+} block_map_entry_t;
 
 /* global (settings.py の block_map_key / block_map に相当) */
 #define BLOCK_MAP_SIZE 7
 extern char block_map_key[BLOCK_MAP_SIZE];
 extern int  block_map_key_count;
-extern BlockMapEntry block_map[BLOCK_MAP_SIZE];
+extern block_map_entry_t block_map[BLOCK_MAP_SIZE];
 
 void create_blocks(void);
 const int (*get_block(void))[4][4];

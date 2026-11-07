@@ -108,9 +108,9 @@ void clear_bingo_lines(void)
     }
 }
 
-BingoLines get_bingo_lines(void)
+bingo_lines_t get_bingo_lines(void)
 {
-    BingoLines delete_rows;
+    bingo_lines_t delete_rows;
     delete_rows.count = 0;
 
     for (int r = 0; r < BOARD_SIZE_HEIGHT; r++) {

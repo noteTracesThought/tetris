@@ -100,7 +100,7 @@ namespace Tetris
                     // ▲▲▲ 処理速度計測（10万回） ▲▲▲
 
                     // bingo
-                    BingoLines bingo_lines = get_bingo_lines();
+                    bingo_lines_t bingo_lines = get_bingo_lines();
                     // ▼▼▼ 処理速度が影響していた処理を追加 ▼▼▼
                     if (bingo_lines.count > 0)
                     {
@@ -150,9 +150,9 @@ namespace Tetris
         // power_on_game() 内ではこのローカル版(Board側とロジックは同一)が使用される。
         // C#では static class 単位で名前空間が分かれるため、Game.get_bingo_lines() として
         // Board.get_bingo_lines() とは別に同名メソッドを定義することでこの「上書き」を再現する。
-        private static BingoLines get_bingo_lines()
+        private static bingo_lines_t get_bingo_lines()
         {
-            BingoLines delete_rows;
+            bingo_lines_t delete_rows;
             delete_rows.rows = new int[Settings.BOARD_SIZE_HEIGHT];
             delete_rows.count = 0;
 

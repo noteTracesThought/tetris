@@ -5,7 +5,7 @@ namespace Tetris
     /// <summary>
     /// block_map の1エントリ (Pythonの dict の key-value に相当、通常の配列で実装)
     /// </summary>
-    public struct BlockMapEntry
+    public struct block_map_entry_t
     {
         public char key;
         public int[,,] shape;
@@ -67,7 +67,7 @@ namespace Tetris
         public const int BLOCK_MAP_SIZE = 7;
         public static char[] block_map_key = new char[BLOCK_MAP_SIZE];
         public static int block_map_key_count = 0;
-        public static BlockMapEntry[] block_map = new BlockMapEntry[BLOCK_MAP_SIZE];
+        public static block_map_entry_t[] block_map = new block_map_entry_t[BLOCK_MAP_SIZE];
 
         // ▼▼▼ 処理速度計測（10万回） ▼▼▼
         private static readonly Random random = new Random(1234567);
@@ -80,13 +80,13 @@ namespace Tetris
             // ▲▲▲ 処理速度計測（10万回） ▲▲▲
             block_map_key_count = 0;
 
-            block_map[0] = new BlockMapEntry { key = 'I', shape = I };
-            block_map[1] = new BlockMapEntry { key = 'J', shape = J };
-            block_map[2] = new BlockMapEntry { key = 'L', shape = L };
-            block_map[3] = new BlockMapEntry { key = 'S', shape = S };
-            block_map[4] = new BlockMapEntry { key = 'Z', shape = Z };
-            block_map[5] = new BlockMapEntry { key = 'O', shape = O };
-            block_map[6] = new BlockMapEntry { key = 'T', shape = T };
+            block_map[0] = new block_map_entry_t { key = 'I', shape = I };
+            block_map[1] = new block_map_entry_t { key = 'J', shape = J };
+            block_map[2] = new block_map_entry_t { key = 'L', shape = L };
+            block_map[3] = new block_map_entry_t { key = 'S', shape = S };
+            block_map[4] = new block_map_entry_t { key = 'Z', shape = Z };
+            block_map[5] = new block_map_entry_t { key = 'O', shape = O };
+            block_map[6] = new block_map_entry_t { key = 'T', shape = T };
 
             for (int i = 0; i < BLOCK_MAP_SIZE; i++)
             {

@@ -7,7 +7,7 @@
 namespace board {
 
 /* get_bingo_lines() の戻り値 (Pythonのlistに相当、通常の固定長配列で実装) */
-struct BingoLines {
+struct bingo_lines_t {
     int rows[settings::BOARD_SIZE_HEIGHT];
     int count;
 };
@@ -18,7 +18,7 @@ void create_board();
 void load_board_result();
 void draw_board(int board_param[settings::BOARD_SIZE_HEIGHT][settings::BOARD_SIZE_WIDTH]);
 void clear_bingo_lines();
-BingoLines get_bingo_lines();
+bingo_lines_t get_bingo_lines();
 
 } // namespace board
 

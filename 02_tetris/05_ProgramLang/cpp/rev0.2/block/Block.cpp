@@ -57,7 +57,7 @@ static const BlockShape T = {{
 
 /* global (settings.py の block_map_key / block_map に相当) */
 std::vector<char> block_map_key;
-std::vector<BlockMapEntry> block_map;
+std::vector<block_map_entry_t> block_map;
 
 void create_blocks()
 {

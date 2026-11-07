@@ -6,7 +6,7 @@ namespace Tetris
     /// <summary>
     /// get_bingo_lines() の戻り値 (Pythonのlistに相当、通常の固定長配列で実装)
     /// </summary>
-    public struct BingoLines
+    public struct bingo_lines_t
     {
         public int[] rows;
         public int count;
@@ -133,9 +133,9 @@ namespace Tetris
             Settings.board_result = new_board;
         }
 
-        public static BingoLines get_bingo_lines()
+        public static bingo_lines_t get_bingo_lines()
         {
-            BingoLines delete_rows;
+            bingo_lines_t delete_rows;
             delete_rows.rows = new int[Settings.BOARD_SIZE_HEIGHT];
             delete_rows.count = 0;
 

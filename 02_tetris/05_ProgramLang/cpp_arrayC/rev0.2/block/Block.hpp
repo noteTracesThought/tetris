@@ -7,7 +7,7 @@ typedef int BlockShape[4][4][4];
 namespace block {
 
 /* block_map の1エントリ (Pythonの dict の key-value に相当) */
-struct BlockMapEntry {
+struct block_map_entry_t {
     char key;
     const int (*shape)[4][4];   /* BlockShape へのポインタ */
 };
@@ -16,7 +16,7 @@ struct BlockMapEntry {
 const int BLOCK_MAP_SIZE = 7;
 extern char block_map_key[BLOCK_MAP_SIZE];
 extern int  block_map_key_count;
-extern BlockMapEntry block_map[BLOCK_MAP_SIZE];
+extern block_map_entry_t block_map[BLOCK_MAP_SIZE];
 
 void create_blocks();
 const int (*get_block())[4][4];

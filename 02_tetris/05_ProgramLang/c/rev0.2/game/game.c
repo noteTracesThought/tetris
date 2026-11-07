@@ -20,7 +20,7 @@
  * power_on_game() 内ではこのローカル版(board側とロジックは同一)が使用される。
  * C言語では同一ファイル内に同名の関数を(staticでも)二重定義できないため、
  * ここだけ game_get_bingo_lines という名前にして再現する。 */
-static BingoLines game_get_bingo_lines(void);
+static bingo_lines_t game_get_bingo_lines(void);
 
 static long collision_count = 0;
 static long bingo_count = 0;
@@ -108,7 +108,7 @@ void power_on_game(void)
             /* ▲▲▲ 処理速度計測（10万回） ▲▲▲ */
 
             /* bingo */
-            BingoLines bingo_lines = game_get_bingo_lines();
+            bingo_lines_t bingo_lines = game_get_bingo_lines();
             /* ▼▼▼ 処理速度が影響していた処理を追加 ▼▼▼ */
             if (bingo_lines.count > 0) {
                 bingo_count++;
@@ -153,9 +153,9 @@ void init_game(void)
     create_blocks();
 }
 
-static BingoLines game_get_bingo_lines(void)
+static bingo_lines_t game_get_bingo_lines(void)
 {
-    BingoLines delete_rows;
+    bingo_lines_t delete_rows;
     delete_rows.count = 0;
 
     for (int r = 0; r < BOARD_SIZE_HEIGHT; r++) {

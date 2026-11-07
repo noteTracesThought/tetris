@@ -13,7 +13,7 @@ namespace game {
  * モジュール末尾で同名の get_bingo_lines() を再定義しているため、
  * power_on_game() 内ではこのローカル版(board側とロジックは同一)が使用される。
  * namespace game 内に同名で定義することで、この「上書き」を再現する。 */
-static board::BingoLines get_bingo_lines();
+static board::bingo_lines_t get_bingo_lines();
 
 void power_on_game()
 {
@@ -91,7 +91,7 @@ void power_on_game()
             /* ▲▲▲ 処理速度計測（10万回） ▲▲▲ */
 
             /* bingo */
-            board::BingoLines bingo_lines = get_bingo_lines();
+            board::bingo_lines_t bingo_lines = get_bingo_lines();
             /* ▼▼▼ 処理速度が影響していた処理を追加 ▼▼▼ */
             if (bingo_lines.count > 0) {
             /* ▲▲▲ 処理速度が影響していた処理を追加 ▲▲▲ */
@@ -131,9 +131,9 @@ void init_game()
     block::create_blocks();
 }
 
-static board::BingoLines get_bingo_lines()
+static board::bingo_lines_t get_bingo_lines()
 {
-    board::BingoLines delete_rows;
+    board::bingo_lines_t delete_rows;
     delete_rows.count = 0;
 
     for (int r = 0; r < settings::BOARD_SIZE_HEIGHT; r++) {

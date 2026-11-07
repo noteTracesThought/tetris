@@ -10,14 +10,14 @@ namespace block {
 using BlockShape = std::array<std::array<std::array<int, 4>, 4>, 4>;
 
 /* block_map の1エントリ (Pythonの dict の key-value に相当) */
-struct BlockMapEntry {
+struct block_map_entry_t {
     char key;
     const BlockShape *shape;
 };
 
 /* global (settings.py の block_map_key / block_map に相当) */
 extern std::vector<char> block_map_key;
-extern std::vector<BlockMapEntry> block_map;
+extern std::vector<block_map_entry_t> block_map;
 
 void create_blocks();
 const BlockShape &get_block();

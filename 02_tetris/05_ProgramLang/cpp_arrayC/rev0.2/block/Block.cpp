@@ -58,7 +58,7 @@ static const int T[4][4][4] = {
 /* global (settings.py の block_map_key / block_map に相当) */
 char block_map_key[BLOCK_MAP_SIZE];
 int  block_map_key_count = 0;
-BlockMapEntry block_map[BLOCK_MAP_SIZE];
+block_map_entry_t block_map[BLOCK_MAP_SIZE];
 
 void create_blocks()
 {
